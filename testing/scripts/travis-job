@@ -191,15 +191,6 @@ run() {
 
     echo
 
-    if [ ! -d zeek-testing-private ]; then
-        get_private_tests
-    fi
-
-    if [ -d zeek-testing-private ]; then
-        commit=`cat commit-hash.zeek-testing-private`
-        echo "Checking out $commit"
-        ( cd zeek-testing-private && git checkout -q $commit )
-    fi
 
     echo
     echo "Running external tests ##############################################"
@@ -209,18 +200,6 @@ run() {
 
     if [ -d zeek-testing ]; then
       cd zeek-testing
-      make
-
-      if [ $? -ne 0 ]; then
-          showdiag
-          ret=1
-      fi
-
-      cd ..
-    fi
-
-    if [ -d zeek-testing-private ]; then
-      cd zeek-testing-private
       make
 
       if [ $? -ne 0 ]; then
